@@ -7,7 +7,12 @@ import Link from 'next/link';
 const name = 'Kaito Noda';
 export const siteTitle = 'Next.js Website';
 
-export default function Layout({ children, home }) {
+type LayoutProps = {
+  children:React.ReactNode;
+  home:boolean;
+}
+
+export default function Layout({ children, home }:LayoutProps):JSX.Element{
   return (
     <div className={styles.container}>
       <Head>

@@ -5,6 +5,7 @@ import { getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
 import {GetStaticProps} from 'next';
+import { PostData } from '../lib/posts'
 
 type Props = {
   allPostsData:{
@@ -14,7 +15,7 @@ type Props = {
   }[]
 }
 
-export default function Home({ allPostsData }:Props) {
+export default function Home({ allPostsData }:Props):JSX.Element{
   return (
     <Layout home>
       <Head>
@@ -39,7 +40,7 @@ export default function Home({ allPostsData }:Props) {
 }
 
 export const  getStaticProps:GetStaticProps = async() => {
-  const allPostsData = getSortedPostsData();
+  const allPostsData:PostData[] = getSortedPostsData();
   return {
     props: {
       allPostsData,

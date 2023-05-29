@@ -3,8 +3,11 @@ import { getAllPostIds, getPostData } from '../../lib/posts';
 import Head from 'next/head';
 import Date from '../../components/date';
 import utilStyles from '../../styles/utils.module.css';
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next';
+import { PostData,PostIdParam } from '../../lib/posts'
 
-export async function getStaticProps({ params }) {
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
   const postData = await getPostData(params.id);
 
   return {
@@ -14,15 +17,15 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export async function getStaticPaths() {
-  const paths = getAllPostIds();
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths:PostIdParam[] = getAllPostIds();
   return {
     paths,
     fallback: false,
   };
 }
 
-export default function Post({ postData }) {
+export default function Post({ postData }:PostData):JSX.Element {
   return (
     <Layout home={false}>
       <Head>
