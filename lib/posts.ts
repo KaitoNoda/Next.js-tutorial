@@ -1,29 +1,29 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { remark } from "remark";
+import html from "remark-html";
 
-export type PostData ={
+export type PostData = {
   id: string;
-  date?:string;
+  date?: string;
   [key: string]: any;
-}
+};
 
 export type PostIdParam = {
-  params:{
-    id:string;
-  }
-}
+  params: {
+    id: string;
+  };
+};
 
-const postsDirectory = path.join(process.cwd(), 'posts');
+const postsDirectory = path.join(process.cwd(), "posts");
 
-export function getSortedPostsData():PostData[] {
-  const fileNames:string[] = fs.readdirSync(postsDirectory);
-  const allPostsData:PostData[] = fileNames.map((fileName) => {
-    const id = fileName.replace(/\.md$/, '');
+export function getSortedPostsData(): PostData[] {
+  const fileNames: string[] = fs.readdirSync(postsDirectory);
+  const allPostsData: PostData[] = fileNames.map((fileName) => {
+    const id = fileName.replace(/\.md$/, "");
     const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const fileContents = fs.readFileSync(fullPath, "utf8");
     const matterResult = matter(fileContents);
 
     return {
@@ -31,8 +31,8 @@ export function getSortedPostsData():PostData[] {
       ...matterResult.data,
     };
   });
-  
-  return allPostsData.sort((a:PostData, b:PostData) => {
+
+  return allPostsData.sort((a: PostData, b: PostData) => {
     if (a.date < b.date) {
       return 1;
     } else {
@@ -41,21 +41,20 @@ export function getSortedPostsData():PostData[] {
   });
 }
 
-
-export function getAllPostIds():PostIdParam[] {
+export function getAllPostIds(): PostIdParam[] {
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames.map((fileName) => {
     return {
       params: {
-        id: fileName.replace(/\.md$/, ''),
+        id: fileName.replace(/\.md$/, ""),
       },
     };
   });
 }
 
-export async function getPostData(id) :Promise<PostData>{
+export async function getPostData(id): Promise<PostData> {
   const fullPath = path.join(postsDirectory, `${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
 
   const processedContent = await remark()

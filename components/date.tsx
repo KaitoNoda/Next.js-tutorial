@@ -1,10 +1,10 @@
-import { parseISO, format } from 'date-fns';
+import { parseISO, format } from "date-fns";
 
 type DateProps = {
-  dateString:string;
-}
+  dateString: string;
+};
 
-export default function Date({ dateString }:DateProps) :JSX.Element {
-  const date:Date = parseISO(dateString);
-  return <time dateTime={dateString}>{format(date, 'LLLL d, yyyy')}</time>;
+export default function Date({ dateString }: DateProps): JSX.Element {
+  const date: Date = parseISO(dateString);
+  return <time dateTime={dateString}>{format(date, "LLLL d, yyyy")}</time>;
 }
