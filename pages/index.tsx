@@ -1,11 +1,21 @@
-import Head from 'next/head';
-import Layout, { siteTitle } from '../components/layout';
-import utilStyles from '../styles/utils.module.css';
-import { getSortedPostsData } from '../lib/posts';
-import Link from 'next/link';
-import Date from '../components/date';
+import Head from "next/head";
+import Layout, { siteTitle } from "../components/layout";
+import utilStyles from "../styles/utils.module.css";
+import { getSortedPostsData } from "../lib/posts";
+import Link from "next/link";
+import Date from "../components/date";
+import { GetStaticProps } from "next";
+import { PostData } from "../lib/posts";
 
-export default function Home({ allPostsData }) {
+type Props = {
+  allPostsData: {
+    id: string;
+    title: string;
+    date: string;
+  }[];
+};
+
+export default function Home({ allPostsData }: Props): JSX.Element {
   return (
     <Layout isHome>
       <Head>
@@ -19,7 +29,7 @@ export default function Home({ allPostsData }) {
               <Link href={`/posts/${id}`}>{title}</Link>
               <br />
               <small className={utilStyles.lightText}>
-                 <Date dateString={date} />
+                <Date dateString={date} />
               </small>
             </li>
           ))}
@@ -29,11 +39,11 @@ export default function Home({ allPostsData }) {
   );
 }
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData: PostData[] = getSortedPostsData();
   return {
     props: {
       allPostsData,
     },
   };
-}
+};
