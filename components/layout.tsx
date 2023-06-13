@@ -7,12 +7,7 @@ import Link from "next/link";
 const name = "Kaito Noda";
 export const siteTitle = "Next.js Website";
 
-type LayoutProps = {
-  children: React.ReactNode;
-  home: boolean;
-};
-
-export default function Layout({ children, home }: LayoutProps): JSX.Element {
+export default function Layout({ children, isHome }): JSX.Element {
   return (
     <div className={styles.container}>
       <Head>
@@ -31,7 +26,7 @@ export default function Layout({ children, home }: LayoutProps): JSX.Element {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className={styles.header}>
-        {home ? (
+        {isHome ? (
           <>
             <Image
               priority
@@ -64,7 +59,7 @@ export default function Layout({ children, home }: LayoutProps): JSX.Element {
         )}
       </header>
       <main>{children}</main>
-      {!home && (
+      {!isHome && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
         </div>

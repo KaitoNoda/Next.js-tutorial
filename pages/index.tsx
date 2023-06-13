@@ -17,7 +17,7 @@ type Props = {
 
 export default function Home({ allPostsData }: Props): JSX.Element {
   return (
-    <Layout home>
+    <Layout isHome>
       <Head>
         <title>{siteTitle}</title>
       </Head>
